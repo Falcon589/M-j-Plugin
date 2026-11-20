@@ -3,32 +3,30 @@ const TARGET_ID = "1184885354751344690";
 
 let patches = [];
 
-({
-  onLoad() {
+return {
+  onLoad: function () {
     const PrivateChannelSortStore = metro.findByStoreName("PrivateChannelSortStore");
     const ChannelStore = metro.findByStoreName("ChannelStore");
 
-    // 1. Ukrywa kanał na głównej posortowanej liście DM
-    if (PrivateChannelSortStore?.getPrivateChannelIds) {
+    if (PrivateChannelSortStore && PrivateChannelSortStore.getPrivateChannelIds) {
       patches.push(
-        patcher.after("getPrivateChannelIds", PrivateChannelSortStore, (_, res) => {
-          return Array.isArray(res) ? res.filter((id) => id !== TARGET_ID) : res;
+        patcher.after("getPrivateChannelIds", PrivateChannelSortStore, function (_, res) {
+          return Array.isArray(res) ? res.filter(function (id) { return id !== TARGET_ID; }) : res;
         })
       );
     }
 
-    // 2. Ukrywa obiekt kanału na liście wszystkich kanałów prywatnych
-    if (ChannelStore?.getSortedPrivateChannels) {
+    if (ChannelStore && ChannelStore.getSortedPrivateChannels) {
       patches.push(
-        patcher.after("getSortedPrivateChannels", ChannelStore, (_, res) => {
-          return Array.isArray(res) ? res.filter((ch) => ch?.id !== TARGET_ID) : res;
+        patcher.after("getSortedPrivateChannels", ChannelStore, function (_, res) {
+          return Array.isArray(res) ? res.filter(function (ch) { return ch && ch.id !== TARGET_ID; }) : res;
         })
       );
     }
   },
 
-  onUnload() {
-    patches.forEach((unpatch) => unpatch());
+  onUnload: function () {
+    patches.forEach(function (unpatch) { unpatch(); });
     patches = [];
   }
-})
+};
