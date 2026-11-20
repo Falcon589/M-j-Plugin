@@ -1,0 +1,14 @@
+{
+  "name": "Hide Specific DM",
+  "description": "Ukrywa wybraną rozmowę prywatną z listy.",
+  "authors": [
+    {
+      "name": "User"
+    }
+  ],
+  "main": "index.js",
+  "vendetta": {
+    "icon": "ic_eye_slash_24px"
+  },
+  "hash": "1"
+}
