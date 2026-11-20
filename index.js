@@ -3,7 +3,7 @@ const TARGET_ID = "1184885354751344690";
 
 let patches = [];
 
-export default {
+({
   onLoad() {
     const PrivateChannelSortStore = metro.findByStoreName("PrivateChannelSortStore");
     const ChannelStore = metro.findByStoreName("ChannelStore");
@@ -31,24 +31,4 @@ export default {
     patches.forEach((unpatch) => unpatch());
     patches = [];
   }
-};
-Używaj kodu z rozwagą.
-
-2. Plik konfiguracyjny (manifest.json)
-
-Revenge wymaga tego pliku, aby rozpoznać wtyczkę. W polu "hash" możesz wpisać dowolny ciąg znaków (np. aktualną datę), gdy robisz prosty plugin bez kompilatora:
-json
-{
-  "name": "Hide Specific DM",
-  "description": "Ukrywa wybraną rozmowę prywatną z listy.",
-  "authors": [
-    {
-      "name": "User"
-    }
-  ],
-  "main": "index.js",
-  "vendetta": {
-    "icon": "ic_eye_slash_24px"
-  },
-  "hash": "1"
-}
+})
